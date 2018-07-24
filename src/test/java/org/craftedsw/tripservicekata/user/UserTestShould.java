@@ -44,4 +44,14 @@ public class UserTestShould {
 
         assertThat(trips.size(), is(1));
     }
+
+    @Test
+    public void determine_if_friends_with_another_user() {
+        User friend = new User();
+        user.addFriend(friend);
+
+        boolean areFriends = user.isFriendsWith(friend);
+
+        assertThat(areFriends, is(true));
+    }
 }

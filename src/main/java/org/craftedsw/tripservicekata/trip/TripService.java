@@ -19,7 +19,7 @@ public class TripService {
     }
 
     private List<Trip> getTrips(User user, User loggedUser) {
-        if (user.getFriends().contains(loggedUser)) {
+        if (user.isFriendsWith(loggedUser)) {
             return findTripsByUser(user);
         }
         return new ArrayList<Trip>();
