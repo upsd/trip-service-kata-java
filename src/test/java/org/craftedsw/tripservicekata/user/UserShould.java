@@ -4,6 +4,7 @@ import org.craftedsw.tripservicekata.trip.Trip;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -19,19 +20,18 @@ public class UserShould {
     }
 
     @Test
-    public void not_have_any_trips_or_friends_by_default() {
-        List<User> friends = user.getFriends();
+    public void not_have_any_trips_by_default() {
         List<Trip> trips = user.trips();
 
-        assertThat(friends.size(), is(0));
         assertThat(trips.size(), is(0));
     }
 
     @Test
     public void add_friend() {
-        user.addFriend(new User());
+        TestableUser testableUser = new TestableUser();
+        testableUser.addFriend(new User());
 
-        List<User> friends = user.getFriends();
+        List<User> friends = testableUser.getFriends();
 
         assertThat(friends.size(), is(1));
     }
@@ -54,4 +54,26 @@ public class UserShould {
 
         assertThat(areFriends, is(true));
     }
+
+    private class TestableUser extends User {
+
+        private List<User> friends;
+
+        public TestableUser() {
+            this.friends = new ArrayList<User>();
+        }
+
+        @Override
+        public void addFriend(User user) {
+            this.friends.add(user);
+            super.addFriend(user);
+        }
+
+        public List<User> getFriends() {
+            return this.friends;
+        }
+    }
 }
+
+
+
